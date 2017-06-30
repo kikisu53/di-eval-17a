@@ -18,6 +18,13 @@ parameters:
       KEY to manipulate with
     required: true
     type: string
+  Encrypt:
+    name: Encrypt
+    in: path
+    description: >
+      check and send to AWS
+    required: true
+    type: string
 paths:
   /kv/{KvKey}:
     x-swagger-router-controller: kv
@@ -72,6 +79,31 @@ paths:
           description: Bad Request, usually malformed parameters
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /{Encrypt}:
+    x-swagger-router-controller: encrypt
+    post:
+      description: check encrypt 
+      operationId: check
+      parameters:
+        - $ref: "#/parameters/Encrypt"
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: "#/definitions/EncryptPostRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/EncryptResponse"
+        "400":
+          description: Bad Request, usually malformed parameters
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "413":
+          description: Entity Too Large
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -105,9 +137,22 @@ definitions:
     properties:
       TS:
         type: string
+  EncryptResponse:
+    required:
+      - RES
+    properties:
+      RES:
+        type: string
+  EncryptPostRequest:
+    required: 
+      - plaintext
+    properties:
+      plaintext:
+        type: string
   ErrorResponse:
     required:
       - message
     properties:
       message:
         type: string
+
