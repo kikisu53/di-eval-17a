@@ -25,7 +25,7 @@ function check(req, res) {
     text.length%2 === 1 ||
     !(text.match(/[^0-9a-fA-F]/)===null)
   ) {
-    res.json(400, { "message": "給人看的錯誤說明" });
+    return res.json(400, { "message": "給人看的錯誤說明" });
   }
   if(text.length>=32) res.json(413, { "message": "給人看的錯誤說明" });
   askapi({"plaintext": text})

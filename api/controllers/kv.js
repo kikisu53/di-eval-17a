@@ -12,7 +12,8 @@ var db = {};
 
 function getKEY(req, res) {
   var usekey = key(req);
-  if(!usekey) res.json(400, { "message": "給人看的錯誤說明" });
+  if(!usekey) 
+  return res.json(400, { "message": "給人看的錯誤說明" });
   db[usekey]
   ? res.json(200, { 
       VALUE: db[usekey],
@@ -23,7 +24,7 @@ function getKEY(req, res) {
 
 function deleteKEY(req, res) {
   var usekey = key(req);
-  if(!usekey) res.json(400, { "message": "給人看的錯誤說明" });
+  if(!usekey) return res.json(400, { "message": "給人看的錯誤說明" });
   var json = {};
   if(db[usekey]) {
     json['OLD_VALUE'] = db[usekey];
@@ -35,8 +36,9 @@ function deleteKEY(req, res) {
 
 function postKEY(req, res) {
   var usekey = key(req), useval = req.body.VALUE;
-  if(useval.match(/[^1-9a-zA-Z=+/]/)!==null
-    || !usekey) res.json(400, { "message": "給人看的錯誤說明" });
+  if(useval.match(/[^1-9a-zA-Z=+/]/)!==null || !usekey) {
+    return res.json(400, { "message": "給人看的錯誤說明" });
+  }
   db[usekey] = req.body.VALUE;
   res.json(200, {
     TS: now,
