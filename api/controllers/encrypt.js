@@ -35,13 +35,6 @@ function check(req, res) {
   .catch(err => res.send(err))
 }
 
-
-
-
-
-
-
-
 module.exports = {
   check,
 }
