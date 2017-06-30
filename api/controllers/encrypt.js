@@ -27,7 +27,7 @@ function check(req, res) {
   ) {
     return res.json(400, { "message": "給人看的錯誤說明" });
   }
-  if(text.length>=32) res.json(413, { "message": "給人看的錯誤說明" });
+  if(text.length>=32) return res.json(413, { "message": "給人看的錯誤說明" });
   askapi({"plaintext": text})
   .then(val => 
     res.json(200, JSON.parse(val))
