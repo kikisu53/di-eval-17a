@@ -1,6 +1,6 @@
 var URLSafeBase64 = require('urlsafe-base64');
 
-let now = new Date().toISOString();
+//let now = new Date().toISOString();
 //let now = '2017-06-29T07:36:17.653Z';
 
 var key = req => {
@@ -17,7 +17,7 @@ function getKEY(req, res) {
   db[usekey]
   ? res.json(200, { 
       VALUE: db[usekey],
-      TS: now,
+      TS: new Date().toISOString(),
     })
   : res.json(404, { "message": "給人看的錯誤說明" })
 }
@@ -30,18 +30,18 @@ function deleteKEY(req, res) {
     json['OLD_VALUE'] = db[usekey];
     delete db[usekey];
   }
-  json['TS'] = now;
+  json['TS'] = new Date().toISOString();
   res.json(200, json)
 }
 
 function postKEY(req, res) {
   var usekey = key(req), useval = req.body.VALUE;
-  if(useval.match(/[^1-9a-zA-Z=+/]/)!==null || !usekey) {
+  if(useval.match(/^([0-9a-zA-Z+/]{4}|[0-9a-zA-Z+/]{3}=|[0-9a-zA-Z+/]{2}==)+$/)===null) {
     return res.json(400, { "message": "給人看的錯誤說明" });
   }
   db[usekey] = req.body.VALUE;
   res.json(200, {
-    TS: now,
+    TS: new Date().toISOString(),
   })
 }
 
