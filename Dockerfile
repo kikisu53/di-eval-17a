@@ -7,14 +7,19 @@ FROM node:6
 # windows: set NODE_ENV=production
 ENV NODE_ENV=production
 
-# -g: global, -r:
+# 新增 group name = app （groupadd app)
+# 新增 user name = app （useradd app), 歸屬在 group name = app (-g app)
+# 設定為系統用群組/帳號 (-r)
 RUN groupadd -r app && useradd -r -g app app
 
 COPY . /opt/app
 WORKDIR /
 RUN npm i --silent
 
+# 設定 container 對外的 port
 EXPOSE 10010
+
+# 指定 username = app 的帳號執行RUN
 USER app
 
 CMD ["node", "/opt/app/app.js"]
