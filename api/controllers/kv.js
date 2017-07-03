@@ -36,7 +36,7 @@ function deleteKEY(req, res) {
 
 function postKEY(req, res) {
   var usekey = key(req), useval = req.body.VALUE;
-  if(useval.match(/^([0-9a-zA-Z+/]{4}|[0-9a-zA-Z+/]{3}=|[0-9a-zA-Z+/]{2}==)+$/)===null) {
+  if(useval.match(/^([0-9a-zA-Z+/]{4}|[0-9a-zA-Z+/]{3}=|[0-9a-zA-Z+/]{2}==)+$/)===null || !usekey) {
     return res.json(400, { "message": "給人看的錯誤說明" });
   }
   db[usekey] = req.body.VALUE;
