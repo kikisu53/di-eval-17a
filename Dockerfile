@@ -14,8 +14,11 @@ ENV NODE_ENV=production
 # 設定為系統用群組/帳號 (-r)
 RUN groupadd -r app && useradd -r -g app app
 
+# 將目前位置的本機資料夾（.) 複製到 container 裡面的 ~/opt/app
 COPY . /opt/app
+# 進入container後的起始工作位置
 WORKDIR /
+# 執行 npm install --silent
 RUN npm i --silent
 
 # 設定 container 對外的 port

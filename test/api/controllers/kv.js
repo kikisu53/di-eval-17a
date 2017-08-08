@@ -42,7 +42,7 @@ describe('controllers', function() {
 
     describe('mixed operation', function() {
       let key = 'abcdeabcdeabcdeabcde'
-      let value = 'bcdeabcdeabcdeabcde'
+      let value = 'bcdeabcdeabcdeabcde='
       
       it('get, post, delete, get', function(done) {
         let uri = `/kv/${key}`
